@@ -1,4 +1,4 @@
-import { createClient } from "../../../../../../../packages/supabase/server";
+import { createClient } from "../../../../../packages/supabase/server";
 
 export default async function TestPage() {
   const supabase = createClient();
