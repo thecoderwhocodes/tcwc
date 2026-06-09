@@ -19,6 +19,8 @@
   "packageManager": "npm@11.13.0",
   "workspaces": [
     "apps/*",
+    "apps/*/*",
+    "apps/*/*/*",
     "packages/*"
   ],
   "dependencies": {
