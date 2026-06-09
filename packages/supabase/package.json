@@ -1,0 +1,8 @@
+{
+  "name": "@tcwc/supabase",
+  "version": "0.0.1",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.0.0",
+    "@supabase/ssr": "^0.10.3"
+  }
+}
