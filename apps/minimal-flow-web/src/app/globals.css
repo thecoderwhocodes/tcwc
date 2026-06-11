@@ -115,3 +115,12 @@ a {
 .pageContainerMain{
   margin-top: 100px;
 }
+
+.devidedContent{
+  display: flex;
+  justify-content: center;
+}
+
+.devidedContent > div{
+  width: 50%;
+}

@@ -1,3 +1,4 @@
+import Sidebar from "../../components/Sidebar";
 
 export default function AppLayout({
   children,
@@ -8,14 +9,7 @@ export default function AppLayout({
     <div style={styles.shell}>
       
       {/* Sidebar (optional später) */}
-      <aside style={styles.sidebar}>
-        <h2>MinimalFlow</h2>
-        <nav>
-          <p>Tasks</p>
-          <p>Projects</p>
-          <p>Settings</p>
-        </nav>
-      </aside>
+      <Sidebar />
 
       {/* Main Content */}
       <main style={styles.main}>
@@ -32,14 +26,7 @@ const styles: Record<string, React.CSSProperties> = {
     minHeight: "100vh",
   },
 
-  sidebar: {
-    width: "220px",
-    padding: "20px",
-    borderRight: "1px solid #222",
-  },
-
   main: {
-    flex: 1,
-    padding: "24px",
+    width: "90%"
   },
 };
