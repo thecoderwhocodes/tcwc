@@ -7,24 +7,17 @@ export function createServerClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
-  if (!url || !key) {
-    throw new Error("Missing Supabase environment variables");
-  }
-
   return createSSRClient(url, key, {
     cookies: {
       async getAll() {
         return (await cookieStore).getAll();
       },
-
       setAll(cookiesToSet) {
         try {
           cookiesToSet.forEach(async ({ name, value, options }) => {
             (await cookieStore).set(name, value, options);
           });
-        } catch {
-          // wichtig: Server Components dürfen cookies nicht zwingend setzen
-        }
+        } catch {}
       },
     },
   });
