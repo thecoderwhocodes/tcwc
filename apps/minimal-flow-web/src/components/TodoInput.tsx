@@ -3,21 +3,28 @@
 import { useState } from "react";
 import { createTodo } from "../app/(app)/home/actions";
 
-export function TodoInput() {
+export default function TodoInput() {
   const [title, setTitle] = useState("");
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!title.trim()) return;
 
-    await createTodo(title);
+    const formData = new FormData();
+    formData.append("title", title);
+
+    await createTodo(formData);
+
     setTitle("");
   }
 
   return (
-    <form action={createTodo}>
-        <input name="title" />
-        <button type="submit">Add</button>
-        </form>
+    <form onSubmit={onSubmit}>
+      <input
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="Neues Todo..."
+      />
+      <button>Add</button>
+    </form>
   );
 }

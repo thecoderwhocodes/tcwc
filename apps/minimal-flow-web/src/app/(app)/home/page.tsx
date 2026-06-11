@@ -1,6 +1,7 @@
 import { createServerClient } from "@tcwc/supabase/server";
-import { TodoInput } from "../../../components/TodoInput";
-import { TodoItem } from "../../../components/TodoItem";
+import { cookies } from "next/headers";
+import TodoInput from "../../../components/TodoInput";
+import { toggleTodo, deleteTodo } from "./actions";
 
 export default async function HomePage() {
   const supabase = createServerClient();
@@ -10,14 +11,18 @@ export default async function HomePage() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return <p>Nicht angemeldet</p>;
+    return <p>Nicht eingeloggt</p>;
   }
 
-  const { data: todos } = await supabase
+  const { data: todos, error } = await supabase
     .from("minimal_flow_todos")
     .select("*")
     .eq("user_id", user.id)
     .order("created_at", { ascending: false });
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
   return (
     <div>
@@ -27,7 +32,23 @@ export default async function HomePage() {
 
       <ul>
         {todos?.map((todo) => (
-          <TodoItem key={todo.id} todo={todo} />
+          <li key={todo.id} style={{ display: "flex", gap: 8 }}>
+            
+            {/* TOGGLE */}
+            <form action={toggleTodo.bind(null, todo.id, todo.completed)}>
+              <button type="submit">
+                {todo.completed ? "✅" : "⬜"}
+              </button>
+            </form>
+
+            <span>{todo.title}</span>
+
+            {/* DELETE */}
+            <form action={deleteTodo.bind(null, todo.id)}>
+              <button type="submit">🗑️</button>
+            </form>
+
+          </li>
         ))}
       </ul>
     </div>
