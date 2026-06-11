@@ -2,12 +2,12 @@ import React from 'react'
 import AppPageHeader from '../../../components/AppPageHeader'
 import AppPageContent from '../../../components/AppPageContent'
 import styles from "../../../styles/accountPage.module.css"
-import { createClient } from "../../../../../../packages/supabase/server";
+import { createServerClient } from "../../../../../../packages/supabase/server";
 import { cookies } from "next/headers";
 import ProfileClient from '../../../components/ProfileClient';
 
 export default async function page() {
-  const supabase = createClient(await cookies());
+  const supabase = createServerClient();
 
   const { data: { user } } = await supabase.auth.getUser();
   return (

@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@tcwc/supabase/server";
+import { createServerClient } from "@tcwc/supabase/server";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 
@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache";
 export async function createTodo(formData: FormData) {
   const title = formData.get("title") as string;
 
-  const supabase = createClient();
+  const supabase = createServerClient();
 
   const {
     data: { user },
@@ -26,7 +26,7 @@ export async function createTodo(formData: FormData) {
 
 // TOGGLE
 export async function toggleTodo(id: string, completed: boolean) {
-  const supabase = createClient();
+  const supabase = createServerClient();
 
   await supabase
     .from("minimal_flow_todos")
@@ -38,7 +38,7 @@ export async function toggleTodo(id: string, completed: boolean) {
 
 // DELETE
 export async function deleteTodo(id: string) {
-  const supabase = createClient();
+  const supabase = createServerClient();
 
   await supabase
     .from("minimal_flow_todos")

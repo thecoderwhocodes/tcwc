@@ -1,9 +1,9 @@
-import { createClient } from "@tcwc/supabase/server";
-import { TodoForm } from "../../../components/TodoInput";
+import { createServerClient } from "@tcwc/supabase/server";
+import { TodoInput } from "../../../components/TodoInput";
 import { TodoItem } from "../../../components/TodoItem";
 
 export default async function HomePage() {
-  const supabase = createClient();
+  const supabase = createServerClient();
 
   const {
     data: { user },
