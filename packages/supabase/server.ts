@@ -12,13 +12,9 @@ export function createServerClient() {
       async getAll() {
         return (await cookieStore).getAll();
       },
-      setAll(cookiesToSet) {
-        try {
-          cookiesToSet.forEach(async ({ name, value, options }) => {
-            (await cookieStore).set(name, value, options);
-          });
-        } catch {}
-      },
+      setAll() {
+        // In Server Components keine Cookies setzen
+      }
     },
   });
 }
