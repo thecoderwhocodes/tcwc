@@ -111,16 +111,3 @@ a {
   outline: none;
   cursor: pointer;
 }
-
-.pageContainerMain{
-  margin-top: 100px;
-}
-
-.devidedContent{
-  display: flex;
-  justify-content: center;
-}
-
-.devidedContent > div{
-  width: 50%;
-}

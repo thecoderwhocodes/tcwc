@@ -1,5 +1,4 @@
 import React from 'react'
-import styles from '../styles/AppPageHeader.module.css'
 
 type AppPageHeaderProps = {
   title: string;
@@ -8,7 +7,7 @@ type AppPageHeaderProps = {
 
 export default function AppPageHeader({ title, children }: AppPageHeaderProps) {
   return (
-    <div className={styles.appPageHeader}>
+    <div className="appPageHeader">
       <div>
         <h1>{title}</h1>
         {children}

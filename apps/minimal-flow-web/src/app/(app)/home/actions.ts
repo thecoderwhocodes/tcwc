@@ -3,27 +3,16 @@
 import { createServerClient } from "@tcwc/supabase/server";
 import { revalidatePath } from "next/cache";
 
-function supabase() {
-  return createServerClient();
-}
-
 // CREATE
-export async function createTodo(formData: FormData) {
-  const title = formData.get("title");
+export async function createTodo(title: string) {
+  const supabase = createServerClient();
 
-  if (typeof title !== "string") return;
+  const { data: userData } = await supabase.auth.getUser();
+  if (!userData.user) return;
 
-  const client = supabase();
-
-  const {
-    data: { user },
-  } = await client.auth.getUser();
-
-  if (!user) return;
-
-  await client.from("minimal_flow_todos").insert({
+  await supabase.from("minimal_flow_todos").insert({
     title,
-    user_id: user.id,
+    user_id: userData.user.id,
     completed: false,
   });
 
@@ -31,12 +20,20 @@ export async function createTodo(formData: FormData) {
 }
 
 // TOGGLE
-export async function toggleTodo(id: string, completed: boolean) {
-  const client = supabase();
+export async function toggleTodo(id: string) {
+  const supabase = createServerClient();
 
-  await client
+  const { data } = await supabase
     .from("minimal_flow_todos")
-    .update({ completed: !completed })
+    .select("completed")
+    .eq("id", id)
+    .single();
+
+  if (!data) return;
+
+  await supabase
+    .from("minimal_flow_todos")
+    .update({ completed: !data.completed })
     .eq("id", id);
 
   revalidatePath("/home");
@@ -44,9 +41,9 @@ export async function toggleTodo(id: string, completed: boolean) {
 
 // DELETE
 export async function deleteTodo(id: string) {
-  const client = supabase();
+  const supabase = createServerClient();
 
-  await client
+  await supabase
     .from("minimal_flow_todos")
     .delete()
     .eq("id", id);

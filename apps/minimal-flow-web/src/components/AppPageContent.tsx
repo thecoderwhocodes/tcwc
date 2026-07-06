@@ -1,5 +1,4 @@
 import React from 'react'
-import styles from '../styles/AppPageContent.module.css'
 
 type AppPageContentProps = {
   children?: React.ReactNode;
@@ -7,7 +6,7 @@ type AppPageContentProps = {
 
 export default function AppPageContent({ children }: AppPageContentProps) {
   return (
-    <div className={styles.appPageContent}>
+    <div className="appPageContent">
       {children}
     </div>
   );
